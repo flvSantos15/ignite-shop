@@ -29,9 +29,9 @@ export const Product = styled('a', {
   footer: {
     position: 'absolute',
     bottom: '0.25rem',
-    left: '0.25rem',
-    right: '0.25rem',
-    padding: '2rem',
+    left: '0.20rem',
+    right: '0.20rem',
+    padding: '1rem',
 
     borderRadius: 6,
 
@@ -46,7 +46,8 @@ export const Product = styled('a', {
     transition: 'all 0.2s ease-in-out',
 
     strong: {
-      fontSize: '$lg'
+      fontSize: '$xl',
+      color: '$gray100'
     },
 
     span: {
