@@ -1,14 +1,14 @@
-import { GetStaticProps } from "next"
-import Image from "next/image"
-import Link from "next/link"
+import { GetStaticProps } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
 
 import { useKeenSlider } from 'keen-slider/react'
-import Stripe from "stripe"
+import Stripe from 'stripe'
 
-import { stripe } from "../lib/stripe"
-import { HomeContainer, Product } from "../styles/pages/home"
+import { stripe } from '../lib/stripe'
+import { HomeContainer, Product } from '../styles/pages/home'
 
-import 'keen-slider/keen-slider.min.css';
+import 'keen-slider/keen-slider.min.css'
 
 interface HomeProps {
   products: {
@@ -16,13 +16,11 @@ interface HomeProps {
     name: string
     imageUrl: string
     description: string
-    price: number
+    price: string
   }[]
 }
 
-export default function Home({
-  products
-}: HomeProps) {
+export default function Home({ products }: HomeProps) {
   const [sliderRef] = useKeenSlider({
     slides: {
       perView: 3,
@@ -32,13 +30,9 @@ export default function Home({
 
   return (
     <HomeContainer ref={sliderRef} className="keen-slider">
-      {products?.map(product => {
+      {products?.map((product) => {
         return (
-          <Link
-            href={`/product/${product?.id}`}
-            passHref
-            key={product?.id}
-          >
+          <Link href={`/product/${product?.id}`} passHref key={product?.id}>
             <Product className="keen-slider__slide">
               <Image src={product?.imageUrl} alt="" width={520} height={480} />
 
@@ -59,7 +53,7 @@ export const getStaticProps: GetStaticProps = async () => {
     expand: ['data.default_price']
   })
 
-  const products = response.data.map(product => {
+  const products = response.data.map((product) => {
     const price = product.default_price as Stripe.Price
 
     return {
@@ -71,7 +65,7 @@ export const getStaticProps: GetStaticProps = async () => {
       price: new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'
-      }).format(Number(price.unit_amount) / 100), // vem em centavos divido por 100
+      }).format(Number(price.unit_amount) / 100) // vem em centavos divido por 100
     }
   })
 
