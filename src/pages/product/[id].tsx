@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import Stripe from 'stripe'
 import { stripe } from '../../lib/stripe'
 
@@ -20,6 +21,11 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
+  const { isFallback } = useRouter()
+
+  if (isFallback) {
+    return <p>Loading...</p>
+  }
   return (
     <ProductContainer>
       <ImageContainer>
@@ -38,6 +44,10 @@ export default function Product({ product }: ProductProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  // nos paths passo o id dos produtos que quero que sejam carregados mais rapidos
+  // se quero os 10 mais acessados por exemplo, passo o id dos 10
+  // e o fallback é pra dizer o que acontece enquanto os dados ainda não estão prontos
+
   return {
     paths: [{ params: { id: 'prod_N6vn5JTaMbjd4i' } }],
     fallback: false
@@ -62,7 +72,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         price: new Intl.NumberFormat('pt-BR', {
           style: 'currency',
           currency: 'BRL'
-        }).format(price.unit_amount as number),
+        }).format((price.unit_amount as number) / 100),
         description: product.description
       }
     },
