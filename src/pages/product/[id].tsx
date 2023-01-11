@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+
 import Stripe from 'stripe'
 import { stripe } from '../../lib/stripe'
 
@@ -17,27 +18,27 @@ interface ProductProps {
     imageUrl: string
     description: string
     price: string
+    defaultPriceId: string
   }
 }
 
 export default function Product({ product }: ProductProps) {
-  const { isFallback } = useRouter()
-
-  if (isFallback) {
-    return <p>Loading...</p>
+  const handleBuyProduct = () => {
+    console.log(product.defaultPriceId)
   }
+
   return (
     <ProductContainer>
       <ImageContainer>
-        <Image src={product.imageUrl} alt="" width={520} height={480} />
+        <Image src={product?.imageUrl} alt="" width={520} height={480} />
       </ImageContainer>
       <ProductDetails>
-        <h1>{product.name}</h1>
-        <span>{product.price}</span>
+        <h1>{product?.name}</h1>
+        <span>{product?.price}</span>
 
-        <p>{product.description}</p>
+        <p>{product?.description}</p>
 
-        <button>Comprar agora</button>
+        <button onClick={handleBuyProduct}>Comprar agora</button>
       </ProductDetails>
     </ProductContainer>
   )
@@ -50,7 +51,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: [{ params: { id: 'prod_N6vn5JTaMbjd4i' } }],
-    fallback: false
+    fallback: true
   }
 }
 
@@ -73,9 +74,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
           style: 'currency',
           currency: 'BRL'
         }).format((price.unit_amount as number) / 100),
-        description: product.description
+        description: product.description,
+        defaultPriceId: price.id
       }
     },
-    revalidate: 60 * 60 * 1 // 1 hours
+    revalidate: 60 * 60 * 1 // 1 hour
   }
 }
