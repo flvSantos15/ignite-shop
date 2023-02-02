@@ -9,6 +9,8 @@ import Stripe from 'stripe'
 import { stripe } from '../lib/stripe'
 import { HomeContainer, Product } from '../styles/pages/home'
 
+import { HiOutlineShoppingBag } from 'react-icons/hi'
+
 import 'keen-slider/keen-slider.min.css'
 
 interface HomeProps {
@@ -51,8 +53,14 @@ export default function Home({ products }: HomeProps) {
                 />
 
                 <footer>
-                  <strong>{product?.name}</strong>
-                  <span>{product?.price}</span>
+                  <div className="details">
+                    <strong>{product?.name}</strong>
+                    <span>{product?.price}</span>
+                  </div>
+
+                  <div className="cart-green-button">
+                    <HiOutlineShoppingBag size="1.5rem" color="#fff" />
+                  </div>
                 </footer>
               </Product>
             </Link>

@@ -25,6 +25,26 @@ export const Header = styled('header', {
     gap: '0.75rem',
 
     backgroundColor: '#202024',
-    borderRadius: '6px'
+    borderRadius: '6px',
+
+    div: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '0px',
+      gap: '8px',
+
+      position: 'absolute',
+      width: '28px',
+      height: '28px',
+      right: '70px',
+      top: '20px',
+
+      background: '#00875F',
+
+      border: '3px solid #121214',
+      borderRadius: '1000px'
+    }
   }
 })

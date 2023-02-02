@@ -26,6 +26,21 @@ export const Product = styled('div', {
     objectFit: 'cover'
   },
 
+  '.details': {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+
+  '.cart-green-button': {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0.75rem',
+    gap: '0.75rem',
+
+    backgroundColor: '$green500',
+    borderRadius: '6px'
+  },
+
   footer: {
     position: 'absolute',
     bottom: '0.25rem',
@@ -41,17 +56,17 @@ export const Product = styled('div', {
 
     backgroundColor: 'rgba(0,0,0,0.6)',
 
-    transform: 'translateY(110%)',
-    opacity: 0,
-    transition: 'all 0.2s ease-in-out',
+    // transform: 'translateY(110%)',
+    // opacity: 0,
+    // transition: 'all 0.2s ease-in-out',
 
     strong: {
-      fontSize: '$xl',
+      fontSize: '1.25rem',
       color: '$gray100'
     },
 
     span: {
-      fontSize: '$xl',
+      fontSize: '1.5rem',
       fonWeight: 'bold',
       color: '$green300'
     }
@@ -59,8 +74,8 @@ export const Product = styled('div', {
 
   '&:hover': {
     footer: {
-      transform: 'translateY(0%)',
-      opacity: 1
+      // transform: 'translateY(0%)',
+      // opacity: 1
     }
   }
 })

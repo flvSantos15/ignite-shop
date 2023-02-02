@@ -15,6 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Header>
         <Image src={logoImg} alt="" />
         <div>
+          <div>1</div>
           <HiOutlineShoppingBag size="2.5rem" color="#8D8D99" />
         </div>
       </Header>
