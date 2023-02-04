@@ -11,7 +11,8 @@ import {
   ProductContainer,
   ProductDetails
 } from '../../styles/pages/product'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { CartContext } from '../../context/CartContext'
 
 interface ProductProps {
   product: {
@@ -25,6 +26,8 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
+  const { addProductToCart } = useContext(CartContext)
+
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false)
 
@@ -45,6 +48,10 @@ export default function Product({ product }: ProductProps) {
     }
   }
 
+  const handleAddToCart = async () => {
+    addProductToCart(product)
+  }
+
   return (
     <>
       <Head>
@@ -62,9 +69,9 @@ export default function Product({ product }: ProductProps) {
 
           <button
             disabled={isCreatingCheckoutSession}
-            onClick={handleBuyProduct}
+            onClick={handleAddToCart}
           >
-            Comprar agora
+            Colocar na sacola
           </button>
         </ProductDetails>
       </ProductContainer>

@@ -12,6 +12,8 @@ import { HomeContainer, Product } from '../styles/pages/home'
 import { HiOutlineShoppingBag } from 'react-icons/hi'
 
 import 'keen-slider/keen-slider.min.css'
+import { useContext } from 'react'
+import { CartContext } from '../context/CartContext'
 
 interface HomeProps {
   products: {
@@ -39,26 +41,31 @@ export default function Home({ products }: HomeProps) {
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products?.map((product) => {
           return (
-            // <Link
-            //   key={product?.id}
-            //   href={`/product/${product?.id}`}
-            //   prefetch={false}
-            // >
-            <Product key={product.id} className="keen-slider__slide">
-              <Image src={product?.imageUrl} alt="" width={520} height={480} />
+            <Link
+              key={product?.id}
+              href={`/product/${product?.id}`}
+              prefetch={false}
+            >
+              <Product key={product.id} className="keen-slider__slide">
+                <Image
+                  src={product?.imageUrl}
+                  alt=""
+                  width={520}
+                  height={480}
+                />
 
-              <footer>
-                <div className="details">
-                  <strong>{product?.name}</strong>
-                  <span>{product?.price}</span>
-                </div>
+                <footer>
+                  <div className="details">
+                    <strong>{product?.name}</strong>
+                    <span>{product?.price}</span>
+                  </div>
 
-                <div className="cart-green-button">
-                  <HiOutlineShoppingBag size="1.5rem" color="#fff" />
-                </div>
-              </footer>
-            </Product>
-            // </Link>
+                  <button className="cart-green-button">
+                    <HiOutlineShoppingBag size="1.5rem" color="#fff" />
+                  </button>
+                </footer>
+              </Product>
+            </Link>
           )
         })}
       </HomeContainer>
