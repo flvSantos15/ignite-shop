@@ -41,7 +41,11 @@ export const Product = styled('div', {
     border: 'none',
 
     backgroundColor: '$green500',
-    borderRadius: '6px'
+    borderRadius: '6px',
+
+    '&:hover': {
+      opacity: 0.7
+    }
   },
 
   footer: {
@@ -59,9 +63,9 @@ export const Product = styled('div', {
 
     backgroundColor: 'rgba(0,0,0,0.6)',
 
-    // transform: 'translateY(110%)',
-    // opacity: 0,
-    // transition: 'all 0.2s ease-in-out',
+    transform: 'translateY(110%)',
+    opacity: 0,
+    transition: 'all 0.2s ease-in-out',
 
     strong: {
       fontSize: '1.25rem',
@@ -77,8 +81,8 @@ export const Product = styled('div', {
 
   '&:hover': {
     footer: {
-      // transform: 'translateY(0%)',
-      // opacity: 1
+      transform: 'translateY(0%)',
+      opacity: 1
     }
   }
 })

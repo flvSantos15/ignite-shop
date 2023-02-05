@@ -10,7 +10,28 @@ export const Container = styled('header', {
   // maxWidth: 1440,
   margin: '0 auto',
 
-  div: {
+  '.logo': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
+
+    button: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '1.2rem',
+
+      backgroundColor: '#202024',
+      borderRadius: '6px',
+      cursor: 'pointer',
+      border: 'none',
+
+      '&:hover': {
+        opacity: 0.7
+      }
+    }
+  },
+
+  '.cart': {
     display: 'flex',
     alignItems: 'center',
     padding: '0.75rem',
@@ -21,6 +42,10 @@ export const Container = styled('header', {
     backgroundColor: '#202024',
     borderRadius: '6px',
     cursor: 'pointer',
+
+    '&:hover': {
+      opacity: 0.7
+    },
 
     div: {
       display: 'flex',

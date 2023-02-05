@@ -54,9 +54,11 @@ export const Container = styled('div', {
     alignItems: 'center',
     padding: '20px 32px',
     gap: '10px',
+    cursor: 'pointer',
 
     // position: 'absolute',
-    width: '384px',
+    // width: '384px',
+    width: '100%',
     height: '69px',
     // left: 'calc(50% - 384px/2)',
     // top: '783px',
@@ -68,7 +70,16 @@ export const Container = styled('div', {
 
     fontFamily: 'Roboto',
     fontWeight: '700',
-    fontSize: '18px'
+    fontSize: '18px',
+
+    '&:disabled': {
+      cursor: 'not-allowed',
+      opacity: 0.6
+    },
+
+    '&:hover': {
+      opacity: 0.7
+    }
   }
 })
 
@@ -83,8 +94,10 @@ export const Products = styled('div', {
 
   // position: absolute;
   // width: '384px',
-  width: '100%'
-  // minHeight: '330px'
+  width: '100%',
+  maxHeight: '600px',
+  overflowX: 'hidden',
+  overflowY: 'auto'
   // left: 48px;
   // top: 136px;
 })
@@ -96,12 +109,12 @@ export const Product = styled('div', {
   padding: '0px',
   gap: '20px',
 
-  width: '384px',
-  height: '94px',
+  width: '100%',
+  // height: '94px',
 
   '.img': {
-    width: '101.94px',
-    height: '93px',
+    // width: '101.94px',
+    // height: '93px',
 
     background: 'linear-gradient(180deg, #1EA483 0%, #7465D4 100%)',
     borderRadius: '8px'
@@ -140,7 +153,7 @@ export const Product = styled('div', {
       color: '#E1E1E6'
     },
 
-    p: {
+    button: {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
@@ -155,6 +168,7 @@ export const Product = styled('div', {
       fontWeight: '700',
       fontSize: '16px',
 
+      background: 'transparent',
       color: '#00875F'
     }
   }

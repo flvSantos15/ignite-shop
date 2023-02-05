@@ -14,6 +14,7 @@ import { HiOutlineShoppingBag } from 'react-icons/hi'
 import 'keen-slider/keen-slider.min.css'
 import { useContext } from 'react'
 import { CartContext } from '../context/CartContext'
+import { ConvertNumber } from '../utils/ConvertNumber'
 
 interface HomeProps {
   products: {
@@ -40,6 +41,8 @@ export default function Home({ products }: HomeProps) {
       </Head>
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products?.map((product) => {
+          const price = ConvertNumber(Number(product.price))
+
           return (
             <Link
               key={product?.id}
@@ -57,7 +60,7 @@ export default function Home({ products }: HomeProps) {
                 <footer>
                   <div className="details">
                     <strong>{product?.name}</strong>
-                    <span>{product?.price}</span>
+                    <span>{price}</span>
                   </div>
 
                   <button className="cart-green-button">
@@ -86,11 +89,11 @@ export const getStaticProps: GetStaticProps = async () => {
       name: product.name,
       imageUrl: product.images[0],
       description: product.description,
-      // price: Number(price.unit_amount) / 100, // vem em centavos divido por 100
-      price: new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-      }).format(Number(price.unit_amount) / 100) // vem em centavos divido por 100
+      price: Number(price.unit_amount) / 100 // vem em centavos divido por 100
+      // price: new Intl.NumberFormat('pt-BR', {
+      //   style: 'currency',
+      //   currency: 'BRL'
+      // }).format(Number(price.unit_amount) / 100) // vem em centavos divido por 100
     }
   })
 
