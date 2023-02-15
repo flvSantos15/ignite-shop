@@ -7,7 +7,13 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { CartContext, ProductProps } from '../../context/CartContext'
 import { ConvertNumber } from '../../utils/ConvertNumber'
 
-import { Container, Products, Product, PriceDetail } from './style'
+import {
+  Container,
+  Products,
+  Product,
+  PriceDetail,
+  CustomButton
+} from './style'
 
 export function CartDrawer() {
   const {
@@ -15,11 +21,9 @@ export function CartDrawer() {
     setIsCartOpen,
     cartProducts,
     removeProductFromCart,
-    currentProduct,
-    setCartProductsAmount
+    cartItems
   } = useContext(CartContext)
 
-  const [cartItems, setCartItems] = useState<ProductProps[]>([])
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false)
 
@@ -27,8 +31,8 @@ export function CartDrawer() {
     setIsCartOpen(isCartOpen === 'isOpen' ? 'isClosed' : 'isOpen')
   }
 
-  const handleRemoveItemFromCart = (product: ProductProps) => {
-    removeProductFromCart({ ...product, quantity: 1 })
+  const handleRemoveItemFromCart = async (product: ProductProps) => {
+    await removeProductFromCart({ ...product, quantity: 1 })
   }
 
   const handleBuyProduct = async () => {
@@ -62,87 +66,62 @@ export function CartDrawer() {
     return ConvertNumber(Number(total))
   }, [cartItems])
 
-  useEffect(() => {
-    if (cartProducts.length > 0) {
-      // preciso montar um array de itens separados
-      for (let i = 0; i < cartProducts.length; i++) {
-        // se cartProduct[i].quantity > 1
-        if (cartProducts[i].name === currentProduct) {
-          if (cartProducts[i].quantity > 1) {
-            // adiciono essa quantidade de tempo
-            setCartItems(
-              cartItems.filter((item) => item.id !== cartProducts[i].id)
-            )
-            for (let k = 1; k < cartProducts[i].quantity; k++) {
-              setCartItems((state) => [...state, cartProducts[i]])
-            }
-          } else {
-            // se não adicion apenas 1 vez
-            if (!cartItems.includes(cartProducts[i])) {
-              setCartItems((state) => [...state, cartProducts[i]])
-            }
-          }
-        }
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cartProducts])
-
-  useEffect(() => {
-    if (cartItems.length > 0) {
-      setCartProductsAmount(cartItems.length)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cartItems])
-
   const isFinisheButtonDisabled = cartProducts.length === 0
 
   return (
     <Container display={isCartOpen}>
-      <div className="svg">
-        <IoCloseSharp size="1.5rem" onClick={handleCloseCart} />
+      <div className="overlay">
+        <div className="svg">
+          <IoCloseSharp size="1.5rem" onClick={handleCloseCart} />
+        </div>
+
+        <h2>Sacola de compras</h2>
+
+        <Products>
+          {cartItems.map((product, index) => {
+            const price = ConvertNumber(Number(product.price))
+            return (
+              <Product key={`${product.id}.${index}`}>
+                <div className="img">
+                  <Image alt="" src={product.imageUrl} width={94} height={94} />
+                </div>
+                <div className="frame">
+                  <h4>{product.name}</h4>
+                  <span>{price}</span>
+                  <button
+                    className=""
+                    onClick={() => handleRemoveItemFromCart(product)}
+                  >
+                    Remover
+                  </button>
+                </div>
+              </Product>
+            )
+          })}
+        </Products>
+
+        <PriceDetail>
+          <div>
+            <h4>Quantidade</h4>
+            <span>Valor total</span>
+          </div>
+          <div>
+            <h3>
+              {cartItems.length > 1
+                ? `${cartItems.length} itens`
+                : `${cartItems.length} item`}
+            </h3>
+            <h2>{totalPrice}</h2>
+          </div>
+        </PriceDetail>
+
+        <CustomButton
+          disabled={isFinisheButtonDisabled || isCreatingCheckoutSession}
+          onClick={handleBuyProduct}
+        >
+          {isCreatingCheckoutSession ? 'Carregando...' : 'Finalizar compra'}
+        </CustomButton>
       </div>
-
-      <h2>Sacola de compras</h2>
-
-      <Products>
-        {cartItems.map((product, index) => {
-          const price = ConvertNumber(Number(product.price))
-          return (
-            <Product key={`${product.id}.${index}`}>
-              <div className="img">
-                <Image alt="" src={product.imageUrl} width={94} height={94} />
-              </div>
-              <div className="frame">
-                <h4>{product.name}</h4>
-                <span>{price}</span>
-                <button onClick={() => handleRemoveItemFromCart(product)}>
-                  Remover
-                </button>
-              </div>
-            </Product>
-          )
-        })}
-      </Products>
-
-      <PriceDetail>
-        <div>
-          <h4>Quantidade</h4>
-          <span>Valor total</span>
-        </div>
-        <div>
-          <h3>
-            {cartItems.length > 1
-              ? `${cartItems.length} itens`
-              : `${cartItems.length} item`}
-          </h3>
-          <h2>{totalPrice}</h2>
-        </div>
-      </PriceDetail>
-
-      <button disabled={isFinisheButtonDisabled} onClick={handleBuyProduct}>
-        Finalizar compra
-      </button>
     </Container>
   )
 }

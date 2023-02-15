@@ -11,8 +11,7 @@ import { CartContext } from '../../context/CartContext'
 
 export function Header() {
   const router = useRouter()
-  const { cartProductsAmount, setIsCartOpen, isCartOpen } =
-    useContext(CartContext)
+  const { cartItems, setIsCartOpen, isCartOpen } = useContext(CartContext)
 
   const handleOpenCart = () => {
     setIsCartOpen(isCartOpen === 'isOpen' ? 'isClosed' : 'isOpen')
@@ -32,7 +31,7 @@ export function Header() {
       </div>
       <div className="cart" onClick={handleOpenCart}>
         <HiOutlineShoppingBag size="2.5rem" color="#8D8D99" />
-        {cartProductsAmount > 0 && <div>{cartProductsAmount}</div>}
+        {cartItems.length > 0 && <div>{cartItems.length}</div>}
       </div>
     </Container>
   )

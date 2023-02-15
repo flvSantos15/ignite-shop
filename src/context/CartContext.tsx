@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 
 export interface ProductProps {
   defaultPriceId: string
@@ -12,12 +12,11 @@ export interface ProductProps {
 
 interface CartContextData {
   cartProducts: ProductProps[]
+  cartItems: ProductProps[]
   currentProduct: string
   isCartOpen: 'isOpen' | 'isClosed'
-  cartProductsAmount: number
   setCartProducts: (product: ProductProps[]) => void
   setIsCartOpen: (item: 'isOpen' | 'isClosed') => void
-  setCartProductsAmount: (item: number) => void
   addProductToCart: (product: ProductProps) => void
   removeProductFromCart: (product: ProductProps) => void
 }
@@ -30,11 +29,11 @@ export const CartContext = createContext({} as CartContextData)
 
 export function CartProvider({ children }: CartProviderProps) {
   const [cartProducts, setCartProducts] = useState<ProductProps[]>([])
-  const [cartProductsAmount, setCartProductsAmount] = useState(0)
   const [currentProduct, setCurrentProduct] = useState('')
   const [isCartOpen, setIsCartOpen] = useState<'isOpen' | 'isClosed'>(
     'isClosed'
   )
+  const [cartItems, setCartItems] = useState<ProductProps[]>([])
 
   const addProductToCart = async (item: ProductProps) => {
     setCurrentProduct(item.name)
@@ -61,28 +60,50 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   const removeProductFromCart = (item: ProductProps) => {
+    setCurrentProduct(item.name)
+
     // pego o item com a quantidade atual
     const product = cartProducts.find(
       (product) => product.id === item.id
     ) as ProductProps
 
     // substituo o valor original por todos menos o do id atual
-    setCartProducts(cartProducts.filter((product) => product.id !== item.id))
+    const cartProductsFiltered = cartProducts.filter(
+      (product) => product.id !== item.id
+    )
+    setCartProducts(cartProductsFiltered)
 
     // faço uma cópia dos existentes e adiciono produto, com a quantidade reduzida
-    setCartProducts((state) => [
-      ...state,
-      { ...product, quantity: product.quantity - 1 }
-    ])
+    if (product?.quantity > 1) {
+      setCartProducts((state) => [
+        ...state,
+        { ...product, quantity: product.quantity - 1 }
+      ])
+    }
   }
+
+  useEffect(() => {
+    if (cartProducts.length > 0) {
+      setCartItems([])
+      for (let i = 0; i < cartProducts.length; i++) {
+        for (let k = 1; k <= cartProducts[i].quantity; k++) {
+          setCartItems((state) => [...state, cartProducts[i]])
+        }
+      }
+    }
+
+    if (cartProducts.length === 0) {
+      setCartItems([])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartProducts, currentProduct])
 
   return (
     <CartContext.Provider
       value={{
         cartProducts,
+        cartItems,
         currentProduct,
-        cartProductsAmount,
-        setCartProductsAmount,
         setCartProducts,
         addProductToCart,
         isCartOpen,

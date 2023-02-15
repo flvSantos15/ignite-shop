@@ -31,7 +31,7 @@ export default function Product({ product }: ProductProps) {
   const price = ConvertNumber(Number(product?.price))
 
   const handleAddToCart = async () => {
-    addProductToCart({ quantity: 1, ...product })
+    await addProductToCart({ quantity: 1, ...product })
   }
 
   return (

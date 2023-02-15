@@ -8,78 +8,80 @@ export const Container = styled('div', {
     }
   },
 
-  // position: 'absolute',
-  width: '480px',
-  height: '860px',
+  width: '100%',
+  height: '100%',
   minHeight: '100vh',
-  right: '0px',
   top: '0px',
-  bottom: '0px',
-  paddingBottom: '0px',
-  paddingTop: '1rem',
-  paddingLeft: '3rem',
-  paddingRight: '3rem',
-  zIndex: '999px',
-  // justifyContent: 'space-between',
 
-  background: '#202024',
-  boxShadow: '-4px 0px 30px rgba(0, 0, 0, 0.8)',
+  backgroundColor: 'rgba(0, 0, 0, 0.6)',
 
-  '.svg': {
-    display: 'flex',
-    justifyContent: 'end',
-    marginBottom: '0.5rem',
+  '.overlay': {
+    width: '480px',
+    height: '100%',
 
-    svg: {
-      cursor: 'pointer'
-    }
-  },
+    position: 'absolute',
+    paddingBottom: '0px',
+    paddingTop: '1rem',
+    paddingLeft: '3rem',
+    paddingRight: '3rem',
+    right: '0px',
+    top: '0px',
+    bottom: '0px',
+    background: '#202024',
+    boxShadow: '-4px 0px 30px rgba(0, 0, 0, 0.8)',
 
-  h2: {
-    fontFamily: 'Roboto',
-    fontWeight: '700',
-    fontSize: '20px',
-    lineHeight: '32px',
+    '.svg': {
+      display: 'flex',
+      justifyContent: 'end',
+      marginBottom: '0.5rem',
 
-    display: 'flex',
-    alignItems: 'center',
-
-    color: '#E1E1E6'
-  },
-
-  button: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '20px 32px',
-    gap: '10px',
-    cursor: 'pointer',
-
-    // position: 'absolute',
-    // width: '384px',
-    width: '100%',
-    height: '69px',
-    // left: 'calc(50% - 384px/2)',
-    // top: '783px',
-
-    background: '#00875F',
-    color: '#fff',
-    border: '0',
-    borderRadius: '8px',
-
-    fontFamily: 'Roboto',
-    fontWeight: '700',
-    fontSize: '18px',
-
-    '&:disabled': {
-      cursor: 'not-allowed',
-      opacity: 0.6
+      svg: {
+        cursor: 'pointer'
+      }
     },
 
-    '&:hover': {
-      opacity: 0.7
+    h2: {
+      fontFamily: 'Roboto',
+      fontWeight: '700',
+      fontSize: '20px',
+      lineHeight: '32px',
+
+      display: 'flex',
+      alignItems: 'center',
+
+      color: '#E1E1E6'
     }
+  }
+})
+
+export const CustomButton = styled('button', {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '20px 32px',
+  gap: '10px',
+  cursor: 'pointer',
+
+  width: '100%',
+  height: '69px',
+
+  background: '#00875F',
+  color: '#fff',
+  border: '0',
+  borderRadius: '8px',
+
+  fontFamily: 'Roboto',
+  fontWeight: '700',
+  fontSize: '18px',
+
+  '&:disabled': {
+    cursor: 'not-allowed',
+    opacity: 0.6
+  },
+
+  '&:hover': {
+    opacity: 0.7
   }
 })
 
@@ -128,7 +130,7 @@ export const Product = styled('div', {
     gap: '8px',
 
     width: '262.06px',
-    height: '94px',
+    // height: '94px',
 
     h4: {
       fontFamily: 'Roboto',
@@ -161,9 +163,10 @@ export const Product = styled('div', {
       padding: '0px',
       // gap: '10px',
       cursor: 'pointer',
+      border: 'none',
 
       width: '65px',
-      // height: '26px',
+      height: '28px',
       fontFamily: 'Roboto',
       fontWeight: '700',
       fontSize: '16px',
